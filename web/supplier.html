@@ -7,6 +7,8 @@
         <link rel="stylesheet" type="text/css" href="css/base.css" />
         <link rel="stylesheet" type="text/css" href="css/index.css" />
         <link rel="stylesheet" type="text/css" href="css/supplier.css" />
+
+
     </head>
     <body>
         <header id="header"></header>
@@ -54,7 +56,7 @@
                     <li>s4 item</li>
                     <li>s4 item</li>
                 </ul>
-                <h3><a href="supplier.html"></a>供货商</h3>
+                <h3 class="active_ys">供货商</h3>
                 <!-- <ul>
                     <li>s5 item</li>
                     <li>s5 item</li>
@@ -84,9 +86,9 @@
                             <col width="200" />
                             <col width="130" />
                             <col width="150" />
-                            <col width="250" />
-                            <col width="140" />
-                            <col width="140" />
+                            <col width="290" />
+                            <col width="120" />
+                            <col width="120" />
                         </colgroup>
                        <thead>
                            <tr>
@@ -100,10 +102,28 @@
                                <th>结算方式</th>
                                
                            </tr>
+
                        </thead>
                        <tbody>
                            <tr>
-                               <td></td>
+                               <td class="edit">编辑</td>
+                               <td class="v_code">17001</td>
+                               <td class="v_name">达利园</td>
+                               <td class="linkname">达达</td>
+                               <td class="tel">13789876389</td>
+                               <td class="address">广东省广州市天河区元岗路1号</td>
+                               <td class="v_type">服装</td>
+                               <td class="payment">季结</td>
+                           </tr>
+                           <tr>
+                               <td class="edit">编辑</td>
+                               <td class="v_code">17001</td>
+                               <td class="v_name">达利园</td>
+                               <td class="linkname">达达</td>
+                               <td class="tel">13789876389</td>
+                               <td class="address">广东省广州市天河区元岗路1号</td>
+                               <td class="v_type">食品</td>
+                               <td class="payment">半年结</td>
                            </tr>
                        </tbody>
                    </table>
@@ -113,7 +133,7 @@
                         <div class="item editInput">
                             <em>*</em>
                             <label for="edit_number">供货商编号:</label>
-                            <input id="edit_number" class="edit_txt" type="text" value="" maxlength="6" />
+                            <input id="edit_number" class="edit_txt v_code" type="text" value="" maxlength="6" />
                             <div id="tip_number" class="info">
                                 <b></b>
                             </div>
@@ -121,26 +141,26 @@
                         <div class="item editInput">
                             <em>*</em>
                             <label for="edit_name">供货商名称:</label>
-                            <input id="edit_name" class="edit_txt" type="text" value="" maxlength="100" />
+                            <input id="edit_name" class="edit_txt v_name" type="text" value="" maxlength="100" />
                             <div class="clearInputText"><b></b></div>             
                         </div>
                         <div class="item editInput">
                             <label for="edit_linkman">联系人:</label>
-                            <input id="edit_linkman" class="edit_txt" type="text" value="" maxlength="32" />
+                            <input id="edit_linkman" class="edit_txt linkname" type="text" value="" maxlength="32" />
                             <div class="clearInputText"><b></b></div>
                         </div>
                         <div class="item editInput">
                             <label for="edit_tel">联系电话:</label>
-                            <input id="edit_tel" class="edit_txt" type="text" value="" maxlength="100" />
+                            <input id="edit_tel" class="edit_txt tel" type="text" value="" maxlength="100" />
                             <div class="clearInputText"><b></b></div>
                         </div>
                         <div class="item editInput textareaSupplier address">
                             <label for="edit_address">地址:</label>
-                            <textarea rows="2" maxlength="100" class="edit_txt" id="edit_address"></textarea>
+                            <textarea rows="2" maxlength="100" class="edit_txt address" id="edit_address"></textarea>
                         </div>
                         <div class="item editInput type">
                             <label for="edit_address">商品类型:</label>
-                            <select>
+                            <select class="v_type">
                                 <option value="">食品</option>
                                 <option value="">饮料</option>
                                 <option value="">服装</option>
@@ -148,7 +168,7 @@
                         </div>
                         <div class="item editInput payment">
                             <label for="edit_payment">结算方式:</label>
-                            <select>
+                            <select class="payment">
                                 <option value="">月结</option>
                                 <option value="">季结</option>
                                 <option value="">半年结</option>
@@ -162,13 +182,80 @@
                         <div class="btn cancel">取消</div>
                         <div class="btn del"><b>删除</b></div>
                     </div>
-
-
-
-
                </div> 
             </div>
         </main>
     </body>
     <script src="js/require.js" data-main="js/index" type="text/javascript"></script>
+
+    <!-- 直接在本页写本页的js代码 -->
+    <script type="text/javascript">
+        require(['config'],function(){
+            require(['common','jquery'],function(){
+                // asideTable_ys起初是隐藏的，点击编辑时才出现
+                $('.addItem_ys').click(function(){
+                    $('.asideTable_ys').show(500);
+                    // 删除按钮要去掉
+                    $('.del').hide();
+                    $('.cancel').click(function(){
+                        $('.asideTable_ys').hide(500);
+                    })
+                })
+
+                // 点击编辑出现
+                $('.edit').click(function(){
+                    $('.asideTable_ys').show(500);
+                    $('.cancel').click(function(){
+                        $('.asideTable_ys').hide(500);
+
+                    })
+                    // 点删除按钮，删除当前tr并且删除数据库中的数据
+                    $('.del').click(function(){
+
+                        $(this).parent().remove();
+
+                    }.bind(this));
+
+                    // 编辑框中显示对应的信息
+                    var v_code = $(this).nextAll('.v_code').text();
+                    $('input.v_code').val(v_code);
+
+                    var v_name = $(this).nextAll('.v_name').text();
+                    $('input.v_name').val(v_name);
+
+                    var linkname = $(this).nextAll('.linkname').text();
+                    $('input.linkname').val(linkname);
+
+                    var tel = $(this).nextAll('.tel').text();
+                    $('input.tel').val(tel);
+
+                    var address = $(this).nextAll('.address').text();
+                    $('textarea.address').val(address);
+
+                    var v_type = $(this).nextAll('.v_type').text();
+                    var length1 = $('select.v_type').children().get().length;
+
+                    for(var i=0;i<length1;i++){
+                    
+                        if($('select.v_type').children().get(i).text == v_type){
+
+                            $('select.v_type').children().get(i).selected = true;
+                        }                    
+                    }
+
+                    var payment = $(this).nextAll('.payment').text();
+                    var length2 = $('select.payment').children().get().length;
+
+                    for(var i=0;i<length2;i++){
+                    
+                        if($('select.payment').children().get(i).text == payment){
+
+                            $('select.payment').children().get(i).selected = true;
+                        }                    
+                    }
+                })
+            });
+        });
+
+    </script>
 </html>

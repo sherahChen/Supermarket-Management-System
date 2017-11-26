@@ -1,4 +1,4 @@
-reqiure(['config'],function(){
+require(['config'],function(){
     require(['common'],function(){
         $('.btn').click(function(){
             $.post('http://localhost:88/login',{username:$('#username').val(),password:$('#password').val()},function(){

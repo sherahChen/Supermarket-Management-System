@@ -1,3 +1,9 @@
+// 当前状态下的标题应该是高亮
+h3.active_ys{
+    background-color: #58bc58;
+}
+
+
 // 供应商右侧部分
 #m_right{
     .title_ys{
@@ -68,11 +74,31 @@
                     font-size: 14px;
                     color: #09c;
                     font-weight: bold;
-
                     text-align:center;
                     
                 }
                 
+            }
+        }
+        tbody{
+            tr{
+                border-bottom:1px solid #ccc;
+                td{
+                    height: 40px;
+                    border-right: 1px solid #ccc;
+                    box-shadow: inset 1px 0 0 rgba(255,255,255,.3);
+                    font-size: 12px;
+                    color: #666;
+                    text-align:center;
+                }
+                .edit{
+                    padding: 0 2px;
+                    font-size: 12px;
+                    margin: 0;
+                    color: #09c;
+                    cursor: pointer;
+                    transition: .5s ease;
+                }
             }
         }
     }
@@ -82,6 +108,7 @@
         bottom: 100px;
         z-index:100;
         background-color: #fff;
+        display:none;
         .editInfo{
             padding-left:30px;
             width: 480px;
@@ -168,6 +195,7 @@
             position: absolute;
             left: 0;
             bottom: -60px;
+            
             .btn{
                 text-align: center;
                 font-size: 16px;

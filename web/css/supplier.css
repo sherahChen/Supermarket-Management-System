@@ -1,3 +1,7 @@
+h3.active_ys {
+  background-color: #58bc58;
+}
+
 #m_right .title_ys {
   height: 40px;
   background-color: #007fff;
@@ -71,12 +75,35 @@
   text-align: center;
 }
 
+#m_right .information_ys tbody tr {
+  border-bottom: 1px solid #ccc;
+}
+
+#m_right .information_ys tbody tr td {
+  height: 40px;
+  border-right: 1px solid #ccc;
+  box-shadow: inset 1px 0 0 rgba(255, 255, 255, 0.3);
+  font-size: 12px;
+  color: #666;
+  text-align: center;
+}
+
+#m_right .information_ys tbody tr .edit {
+  padding: 0 2px;
+  font-size: 12px;
+  margin: 0;
+  color: #09c;
+  cursor: pointer;
+  transition: .5s ease;
+}
+
 #m_right .asideTable_ys {
   position: fixed;
   right: 0;
   bottom: 100px;
   z-index: 100;
   background-color: #fff;
+  display: none;
 }
 
 #m_right .asideTable_ys .editInfo {
