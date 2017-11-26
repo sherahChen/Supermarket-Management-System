@@ -64,6 +64,8 @@ h3.active_ys{
         }
     }
     .information_ys{
+        // height: 343px;
+        // overflow:hidden;
         thead{
             tr{
                 th{
@@ -83,6 +85,7 @@ h3.active_ys{
         tbody{
             tr{
                 border-bottom:1px solid #ccc;
+                border-left:1px solid #ccc;
                 td{
                     height: 40px;
                     border-right: 1px solid #ccc;

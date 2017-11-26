@@ -2,8 +2,8 @@ var express = require('express');
 var app = express();
 var bp = require('body-parser');
 
-var userRouter = require('./user');
-var productRouter = require('./product');
+// var userRouter = require('./user');
+// var productRouter = require('./product');
 
 
 
@@ -27,8 +27,8 @@ module.exports = {
             }
         });
 
-        userRouter.register(app);
-        productRouter.register(app);
+        // userRouter.register(app);
+        // productRouter.register(app);
         supplierRouter.sup(app);
 
         app.listen(_port);

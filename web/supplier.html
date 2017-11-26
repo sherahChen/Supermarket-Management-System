@@ -105,7 +105,7 @@
 
                        </thead>
                        <tbody>
-                           <tr>
+                           <!-- <tr>
                                <td class="edit">编辑</td>
                                <td class="v_code">17001</td>
                                <td class="v_name">达利园</td>
@@ -114,17 +114,7 @@
                                <td class="address">广东省广州市天河区元岗路1号</td>
                                <td class="v_type">服装</td>
                                <td class="payment">季结</td>
-                           </tr>
-                           <tr>
-                               <td class="edit">编辑</td>
-                               <td class="v_code">17001</td>
-                               <td class="v_name">达利园</td>
-                               <td class="linkname">达达</td>
-                               <td class="tel">13789876389</td>
-                               <td class="address">广东省广州市天河区元岗路1号</td>
-                               <td class="v_type">食品</td>
-                               <td class="payment">半年结</td>
-                           </tr>
+                           </tr> -->
                        </tbody>
                    </table>
                </div> 
@@ -164,6 +154,12 @@
                                 <option value="">食品</option>
                                 <option value="">饮料</option>
                                 <option value="">服装</option>
+                                <option value="">果冻</option>
+                                <option value="">glass</option>
+                                <option value="">film</option>
+                                <option value="">家居用品</option>
+                                <option value="">护肤品</option>
+                                <option value="">电子产品</option>
                             </select>
                         </div>
                         <div class="item editInput payment">
@@ -178,84 +174,14 @@
                         </div>
                     </div>
                     <div class="editBottom">
-                        <div class="btn save">保存</div>
+                        <div class="btn save addSave changeSave">保存</div>
                         <div class="btn cancel">取消</div>
                         <div class="btn del"><b>删除</b></div>
                     </div>
                </div> 
+               
             </div>
         </main>
     </body>
     <script src="js/require.js" data-main="js/index" type="text/javascript"></script>
-
-    <!-- 直接在本页写本页的js代码 -->
-    <script type="text/javascript">
-        require(['config'],function(){
-            require(['common','jquery'],function(){
-                // asideTable_ys起初是隐藏的，点击编辑时才出现
-                $('.addItem_ys').click(function(){
-                    $('.asideTable_ys').show(500);
-                    // 删除按钮要去掉
-                    $('.del').hide();
-                    $('.cancel').click(function(){
-                        $('.asideTable_ys').hide(500);
-                    })
-                })
-
-                // 点击编辑出现
-                $('.edit').click(function(){
-                    $('.asideTable_ys').show(500);
-                    $('.cancel').click(function(){
-                        $('.asideTable_ys').hide(500);
-
-                    })
-                    // 点删除按钮，删除当前tr并且删除数据库中的数据
-                    $('.del').click(function(){
-
-                        $(this).parent().remove();
-
-                    }.bind(this));
-
-                    // 编辑框中显示对应的信息
-                    var v_code = $(this).nextAll('.v_code').text();
-                    $('input.v_code').val(v_code);
-
-                    var v_name = $(this).nextAll('.v_name').text();
-                    $('input.v_name').val(v_name);
-
-                    var linkname = $(this).nextAll('.linkname').text();
-                    $('input.linkname').val(linkname);
-
-                    var tel = $(this).nextAll('.tel').text();
-                    $('input.tel').val(tel);
-
-                    var address = $(this).nextAll('.address').text();
-                    $('textarea.address').val(address);
-
-                    var v_type = $(this).nextAll('.v_type').text();
-                    var length1 = $('select.v_type').children().get().length;
-
-                    for(var i=0;i<length1;i++){
-                    
-                        if($('select.v_type').children().get(i).text == v_type){
-
-                            $('select.v_type').children().get(i).selected = true;
-                        }                    
-                    }
-
-                    var payment = $(this).nextAll('.payment').text();
-                    var length2 = $('select.payment').children().get().length;
-
-                    for(var i=0;i<length2;i++){
-                    
-                        if($('select.payment').children().get(i).text == payment){
-
-                            $('select.payment').children().get(i).selected = true;
-                        }                    
-                    }
-                })
-            });
-        });
-
-    </script>
 </html>

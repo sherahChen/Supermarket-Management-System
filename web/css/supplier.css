@@ -77,6 +77,7 @@ h3.active_ys {
 
 #m_right .information_ys tbody tr {
   border-bottom: 1px solid #ccc;
+  border-left: 1px solid #ccc;
 }
 
 #m_right .information_ys tbody tr td {
