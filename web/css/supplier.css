@@ -71,12 +71,19 @@
   text-align: center;
 }
 
+#m_right .asideTable_ys {
+  position: fixed;
+  right: 0;
+  bottom: 100px;
+  z-index: 100;
+  background-color: #fff;
+}
+
 #m_right .asideTable_ys .editInfo {
   padding-left: 30px;
   width: 480px;
   position: relative;
   overflow: hidden;
-  height: 100%;
   outline: 0;
   direction: ltr;
   border: 1px solid #ccc;
@@ -103,6 +110,13 @@
   color: #999;
   border-right: 1px solid #fff;
   transition: .5s ease;
+  cursor: default;
+}
+
+#m_right .asideTable_ys .editInfo .item label:hover {
+  outline: -webkit-focus-ring-color auto 5px;
+  background: #ddd;
+  border-right: 1px solid #ddd;
 }
 
 #m_right .asideTable_ys .editInfo .item em {
@@ -116,7 +130,7 @@
 }
 
 #m_right .asideTable_ys .editInfo .item textarea {
-  width: 365px;
+  width: 327px;
   overflow: hidden;
   margin: 0 10px 0 8px;
   padding: 9px 0;
@@ -129,6 +143,15 @@
   resize: none;
 }
 
+#m_right .asideTable_ys .editInfo .item select {
+  height: 38px;
+  line-height: 38px;
+  color: #09c;
+  width: 345px;
+  float: right;
+  border: 0;
+}
+
 #m_right .asideTable_ys .editInfo input[type="text"] {
   height: 20px;
   line-height: 20px;
@@ -137,4 +160,54 @@
   padding: 9px 10px;
   border: 0;
   float: left;
+}
+
+#m_right .asideTable_ys .editBottom {
+  width: 470px;
+  height: 40px;
+  padding: 10px;
+  background: #f4f4f4;
+  border-top: 1px solid #d5e9ed;
+  float: left;
+  position: absolute;
+  left: 0;
+  bottom: -60px;
+}
+
+#m_right .asideTable_ys .editBottom .btn {
+  text-align: center;
+  font-size: 16px;
+  line-height: 38px;
+  cursor: pointer;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+#m_right .asideTable_ys .editBottom .save {
+  width: 180px;
+  height: 40px;
+  background: #09c;
+  color: #fff;
+  line-height: 40px;
+  float: right;
+  margin: 0 10px;
+}
+
+#m_right .asideTable_ys .editBottom .cancel {
+  width: 80px;
+  height: 38px;
+  background: #fff;
+  border: 1px solid #ccc;
+  float: right;
+  color: #999;
+}
+
+#m_right .asideTable_ys .editBottom .del {
+  width: 38px;
+  height: 38px;
+  border: 1px solid #ccc;
+  background: #fff;
+  float: left;
+  margin: 0 10px;
+  transition: .3s ease;
 }
