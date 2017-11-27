@@ -21,8 +21,7 @@ module.exports={
         })
         app.post('/del',function(req,res){
             db.mongodb.delete('supplier',req.body,function(result){
-                res.send(result.data);
-                console.log(req.body)
+                res.send(result);
                 console.log(result)
             })
 

@@ -30,7 +30,7 @@ module.exports = {
         })
     },
     delete:function(_collection,_condition,_cb){//删除符合条件的
-        db.collection(_collection).remove(_condition,function(error,result){
+        db.collection(_collection).remove(_condition,1,function(error,result){
             _cb(result);
         })
     }
