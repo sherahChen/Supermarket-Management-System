@@ -1,5 +1,5 @@
 {
-  "name": "Supermarket-Management-System",
+  "name": "supermarket_management_system",
   "version": "1.0.0",
   "description": "\"超市管理系统\"",
   "main": "gulpfile.js",
@@ -9,12 +9,14 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sherahChen/Supermarket-Management-System.git"
+  },
   "author": "sherah",
   "license": "ISC",
-  "dependencies": {
-    "express": "^4.16.2",
-    "gulp-concat": "^2.6.1",
-    "gulp-rename": "^1.2.2",
-    "gulp-uglify": "^3.0.0"
-  }
+  "bugs": {
+    "url": "https://github.com/sherahChen/Supermarket-Management-System/issues"
+  },
+  "homepage": "https://github.com/sherahChen/Supermarket-Management-System#readme"
 }
