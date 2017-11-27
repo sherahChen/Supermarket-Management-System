@@ -2,7 +2,7 @@ require(['config'],function(){
     require(['common','jquery'],function(){
         // 向后台请求数据写入页面
         $.post(global.apiBaseUrl + 'supplier',function(res){
-   
+ 
             // 获取数据写入页面
             $('tbody').get(0).innerHTML = res.data.map(function(item){
                 return `<tr>
@@ -32,9 +32,10 @@ require(['config'],function(){
                 $('.cancel').click(function(){
                     $('.asideTable_ys').hide(500);
                 })
+
                 // 点保存新增项目
                 $('.addSave').off().on('click',function(){
-               
+                    
                     var v_code1 = $('input.v_code').val();
                     var v_name1 = $('input.v_name').val();
                     var linkname1 = $('input.linkname').val();
@@ -42,7 +43,19 @@ require(['config'],function(){
                     var address1 = $('textarea.address').val();
                     var v_type1 = $('.v_type').children(':selected').text();
                     var payment1 = $('.payment').children(':selected').text();
-                    
+                    var $tr = $('<tr></tr>');
+                        $tr.html(`
+                               
+                            <td class="edit">编辑</td>
+                            <td class="v_code">${v_code1}</td>
+                            <td class="v_name">${v_name1}</td>
+                            <td class="linkname">${linkname1}</td>
+                            <td class="tel">${tel1}</td>
+                            <td class="address">${address1}</td>
+                            <td class="v_type">${v_type1}</td>
+                            <td class="payment">${payment1}</td> 
+                            
+                        `).appendTo('tbody');
                     $('.asideTable_ys').hide(500);
 
                     
@@ -59,19 +72,7 @@ require(['config'],function(){
                     }
                     $.post(global.apiBaseUrl + 'add',data,function(res){
                         console.log(res)
-                        var $tr = $('<tr></tr>');
-                        $tr.html(`
-                               
-                            <td class="edit" data-id="${res.data.insertedIds[0]}">编辑</td>
-                            <td class="v_code">${v_code1}</td>
-                            <td class="v_name">${v_name1}</td>
-                            <td class="linkname">${linkname1}</td>
-                            <td class="tel">${tel1}</td>
-                            <td class="address">${address1}</td>
-                            <td class="v_type">${v_type1}</td>
-                            <td class="payment">${payment1}</td> 
-                            
-                        `).appendTo('tbody');
+                        
                     })
                     editEvent();
                    
@@ -184,6 +185,45 @@ require(['config'],function(){
 
              editEvent();   
 
-        })   
-    });
+        })  
+
+         //点击查询获取输入框中的值，向后台请求符合条件的数据写入页面
+        var searchFun = function(){
+            var $searchCont = $('#getInfor_ys').val();
+            $.post(global.apiBaseUrl + 'search',{name:$searchCont},function(res){
+                var data = res.data[0];
+                console.log(data)
+                
+                    var resCon = `<tr>
+                    <td class="edit" data-id="${data._id}">编辑</td>
+                    <td class="v_code">${data.id}</td>
+                    <td class="v_name">${data.name}</td>
+                    <td class="linkname">${data.linkname}</td>
+                    <td class="tel">${data.tel}</td>
+                    <td class="address">${data.address}</td>
+                    <td class="v_type">${data.type}</td>
+                    <td class="payment">${data.payment}</td> 
+                </tr>`
+                $('tbody').html(resCon);
+                
+            })
+        }
+        $('.function_ys #searchBtn_ys').on('click',function(){
+            searchFun();
+        })
+        // 当输入框获得焦点时才触发键盘事件
+        $('.function_ys #getInfor_ys').on('focus',function(){
+            $('body').on('keyup',function(e){
+                if(e.keyCode == 13){
+                    searchFun();
+                }
+
+            })
+            
+        })
+        // 失去焦点时关闭键盘事件
+        $('.function_ys #getInfor_ys').on('blur',function(){
+            $('body').off('keyup');
+        })
+    }); 
 });
