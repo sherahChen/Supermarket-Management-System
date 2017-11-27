@@ -17,7 +17,8 @@ h3.active_ys {
   background-clip: padding-box;
 }
 
-#m_right .function_ys .addItem_ys {
+#m_right .function_ys .addItem_ys, #m_right .function_ys .prev, #m_right .function_ys .next {
+  margin-right: 20px;
   padding: 0 8px;
   float: left;
   line-height: 30px;
@@ -26,9 +27,10 @@ h3.active_ys {
   border-radius: 2px;
   border: 1px solid rgba(255, 255, 255, 0);
   transition: background-color ease .5s, border ease .5s;
+  border: 1px solid #ccc;
 }
 
-#m_right .function_ys .addItem_ys:hover {
+#m_right .function_ys .addItem_ys:hover, #m_right .function_ys .prev:hover, #m_right .function_ys .next:hover {
   height: 30px;
   padding: 0 8px;
   float: left;

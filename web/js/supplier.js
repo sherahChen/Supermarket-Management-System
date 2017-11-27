@@ -1,8 +1,9 @@
 require(['config'],function(){
     require(['common','jquery'],function(){
         // 向后台请求数据写入页面
-        $.post(global.apiBaseUrl + 'supplier',function(res){
- 
+        var qty = 5;
+        var pageNo = 1;
+        $.post(global.apiBaseUrl + 'supplier',{qty:qty,pageNo:pageNo},function(res){
             // 获取数据写入页面
             $('tbody').get(0).innerHTML = res.data.map(function(item){
                 return `<tr>
@@ -16,6 +17,13 @@ require(['config'],function(){
                     <td class="payment">${item.payment}</td> 
                 </tr>`
             }).join('');
+
+
+
+
+
+
+
 
             // asideTable_ys起初是隐藏的，点击新增时才出现
             $('.addItem_ys').on('click',function(){
@@ -191,20 +199,22 @@ require(['config'],function(){
         var searchFun = function(){
             var $searchCont = $('#getInfor_ys').val();
             $.post(global.apiBaseUrl + 'search',{name:$searchCont},function(res){
-                var data = res.data[0];
+                var data = res.data;
                 console.log(data)
-                
-                    var resCon = `<tr>
-                    <td class="edit" data-id="${data._id}">编辑</td>
-                    <td class="v_code">${data.id}</td>
-                    <td class="v_name">${data.name}</td>
-                    <td class="linkname">${data.linkname}</td>
-                    <td class="tel">${data.tel}</td>
-                    <td class="address">${data.address}</td>
-                    <td class="v_type">${data.type}</td>
-                    <td class="payment">${data.payment}</td> 
-                </tr>`
-                $('tbody').html(resCon);
+
+                // 获取数据写入页面
+                $('tbody').get(0).innerHTML = res.data.map(function(item){
+                    return `<tr>
+                        <td class="edit" data-id="${item._id}">编辑</td>
+                        <td class="v_code">${item.id}</td>
+                        <td class="v_name">${item.name}</td>
+                        <td class="linkname">${item.linkname}</td>
+                        <td class="tel">${item.tel}</td>
+                        <td class="address">${item.address}</td>
+                        <td class="v_type">${item.type}</td>
+                        <td class="payment">${item.payment}</td> 
+                    </tr>`
+                }).join('');
                 
             })
         }
@@ -217,13 +227,74 @@ require(['config'],function(){
                 if(e.keyCode == 13){
                     searchFun();
                 }
-
             })
-            
         })
         // 失去焦点时关闭键盘事件
         $('.function_ys #getInfor_ys').on('blur',function(){
             $('body').off('keyup');
         })
+        // 添加分页
+        // 点击下一页，
+        var page;
+        $('.prev').css({'color':'#ccc'})
+        $('.next').click(function(e){
+            $('.prev').css({'color':'#000'});
+            if(pageNo>Math.floor(page)){//3
+                pageNo=Math.ceil(page);//4
+                $('.next').css({'color':'#ccc'});
+            }else{
+                pageNo++;
+            }
+            $.post(global.apiBaseUrl + 'supplier',{qty:qty,pageNo:pageNo},function(res){
+                page = res.total/qty;
+                console.log(res)
+                // 获取数据写入页面
+                $('tbody').get(0).innerHTML = res.data.map(function(item){
+                    return `<tr>
+                        <td class="edit" data-id="${item._id}">编辑</td>
+                        <td class="v_code">${item.id}</td>
+                        <td class="v_name">${item.name}</td>
+                        <td class="linkname">${item.linkname}</td>
+                        <td class="tel">${item.tel}</td>
+                        <td class="address">${item.address}</td>
+                        <td class="v_type">${item.type}</td>
+                        <td class="payment">${item.payment}</td> 
+                    </tr>`
+                }).join('');
+                console.log(res.total/qty)//3.2
+                
+
+            })
+        })
+
+        $('.prev').click(function(e){
+            $('.next').css({'color':'#000'})
+            if(pageNo<=1){
+                pageNo=1;
+                $('.prev').css({'color':'#ccc'})
+            }else{
+                pageNo--;
+
+            }
+            $.post(global.apiBaseUrl + 'supplier',{qty:qty,pageNo:pageNo},function(res){
+                console.log(res)
+                // 获取数据写入页面
+                $('tbody').get(0).innerHTML = res.data.map(function(item){
+                    return `<tr>
+                        <td class="edit" data-id="${item._id}">编辑</td>
+                        <td class="v_code">${item.id}</td>
+                        <td class="v_name">${item.name}</td>
+                        <td class="linkname">${item.linkname}</td>
+                        <td class="tel">${item.tel}</td>
+                        <td class="address">${item.address}</td>
+                        <td class="v_type">${item.type}</td>
+                        <td class="payment">${item.payment}</td> 
+                    </tr>`
+                }).join('');
+                
+            })
+        })
+
+        
     }); 
-});
+}); 

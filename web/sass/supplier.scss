@@ -18,7 +18,8 @@ h3.active_ys{
         height: 32px;
         padding:8px 10px;
         background-clip: padding-box;
-        .addItem_ys{
+        .addItem_ys,.prev,.next{
+            margin-right:20px;
             padding: 0 8px;
             float: left;
             line-height: 30px;
@@ -27,9 +28,9 @@ h3.active_ys{
             border-radius: 2px;
             border: 1px solid rgba(255,255,255,0);
             transition: background-color ease .5s, border ease .5s;
-
+            border: 1px solid #ccc;
         }
-        .addItem_ys:hover{
+        .addItem_ys:hover,.prev:hover,.next:hover{
             height: 30px;
             padding: 0 8px;
             float: left;
