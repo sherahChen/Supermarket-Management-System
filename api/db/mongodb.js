@@ -1,7 +1,6 @@
 var mongodb = require('mongodb');
 var client = mongodb.MongoClient;
 var connstr = 'mongodb://127.0.0.1:27017/market';
-
 var apiresult = require('../modules/apiresult');
 
 var db;
@@ -24,9 +23,10 @@ module.exports = {
             _cb(apiresult(error ? false : true, error || result));
         })
     },
-    update:function(_collection,_condition,_data){//要修改的条件查询，要修改的数据
-        db.collection(_collection).update(_condition,_data,function(error,result){
-            _cb(result);
+    update:function(_collection,_condition,_data,_cb){//要修改的条件查询，要修改的数据
+            console.log(_condition)
+        db.collection(_collection).update(_condition,{$set:_data},function(error,result){
+            _cb(apiresult(error ? false : true, error || result));
         })
     },
     delete:function(_collection,_condition,_cb){//删除符合条件的

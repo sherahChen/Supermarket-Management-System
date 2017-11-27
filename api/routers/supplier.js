@@ -2,6 +2,8 @@
 // 后端供货商js代码
 var apirequire = require('../modules/apiresult.js');
 var db = require('../db/dbhelper');
+
+var ObjectId = require('mongodb').ObjectID;
 // 供应商
 module.exports={
     sup:function(app){
@@ -26,6 +28,14 @@ module.exports={
             })
 
         })
+        app.post('/change',function(req,res){
+
+            db.mongodb.update('supplier',{id : req.body.id},req.body,function(result){
+                res.send(result);
+                // console.log(result)
+            })
+        })
 
     }
 }
+
