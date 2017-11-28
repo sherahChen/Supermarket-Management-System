@@ -19,12 +19,6 @@ require(['config'],function(){
             }).join('');
 
 
-
-
-
-
-
-
             // asideTable_ys起初是隐藏的，点击新增时才出现
             $('.addItem_ys').on('click',function(){
                  // 编号的输入框允许编辑
@@ -87,120 +81,120 @@ require(['config'],function(){
                 })
             })
 
-            
-            var editEvent = function(){
-                // 点击编辑出现
-                $('.edit').click(function(){
-
-                    $('.del').show();
-
-                    $('.asideTable_ys').show(500);
-                    $('.cancel').click(function(){
-                        $('.asideTable_ys').hide(500);
-
-                    })
-                    // 编号的输入框不允许编辑
-                    $("input.v_code").attr("readonly", true);
-                    // 点删除按钮，删除当前tr并且删除数据库中的数据
-                    $('.del').off().click(function(){
-
-                        $(this).parent().remove();
-                        var aa = $(this).next().text();
-                        // 发送数据给后台删除该项
-                        $.post(global.apiBaseUrl + 'del',{id:aa},function(res){
-                        })
-                        $('.asideTable_ys').hide(500);
-
-                    }.bind(this));
-
-                    // 编辑框中显示对应的信息
-                    var v_code = $(this).nextAll('.v_code').text();
-                    $('input.v_code').val(v_code);
-
-                    var v_name = $(this).nextAll('.v_name').text();
-                    $('input.v_name').val(v_name);
-
-                    var linkname = $(this).nextAll('.linkname').text();
-                    $('input.linkname').val(linkname);
-
-                    var tel = $(this).nextAll('.tel').text();
-                    $('input.tel').val(tel);
-
-                    var address = $(this).nextAll('.address').text();
-                    $('textarea.address').val(address);
-
-                    var v_type = $(this).nextAll('.v_type').text();
-                    var length1 = $('select.v_type').children().get().length;
-
-                    for(var i=0;i<length1;i++){
-                    
-                        if($('select.v_type').children().get(i).text == v_type){
-
-                            $('select.v_type').children().get(i).selected = true;
-                        }                    
-                    }
-
-                    var payment = $(this).nextAll('.payment').text();
-                    var length2 = $('select.payment').children().get().length;
-
-                    for(var i=0;i<length2;i++){
-                    
-                        if($('select.payment').children().get(i).text == payment){
-
-                            $('select.payment').children().get(i).selected = true;
-                        }                    
-                    }
-
-                    // 点击保存时。要将当前输入框中的内容重新赋值给当前tr,并更改数据库中的数据
-                    $('.save').off().click(function(){
-                        var v_code2 = $('input.v_code').val();
-                        var v_name2 = $('input.v_name').val();
-                        var linkname2 = $('input.linkname').val();
-                        var tel2 = $('input.tel').val();
-                        var address2 = $('textarea.address').val();
-                        var v_type2 = $('.v_type').children(':selected').text();
-                        var payment2 = $('.payment').children(':selected').text();
-                        $(this).nextAll('.v_code').text(v_code2);
-                        $(this).nextAll('.v_name').text(v_name2);
-                        $(this).nextAll('.linkname').text(linkname2);
-                        $(this).nextAll('.tel').text(tel2);
-                        $(this).nextAll('.address').text(address2);
-                        $(this).nextAll('.v_type').text(v_type2);
-                        $(this).nextAll('.payment').text(payment2);
-                        $('.asideTable_ys').hide(500);
-
-                        // 向后台发送更改之后的请求
-                        // var _id = $(this).attr('data-id');
-                        var data = {
-                            // _id:ObjectId(_id),
-                            // _id:_id,
-                            id:v_code2,
-                            name:v_name2,
-                            linkname:linkname2,
-                            tel:tel2,
-                            address:address2,
-                            type:v_type2,
-                            payment:payment2
-                        }
-                        $.post(global.apiBaseUrl + 'change',data,function(res){
-                            console.log(res);
-                        })
-
-                    }.bind(this));
-                })
-
-            }
-
-             editEvent();   
+            editEvent();   
 
         })  
+        // 点击编辑的函数
+        var editEvent = function(){
+            // 点击编辑出现
+            $('.edit').click(function(){
+
+                $('.del').show();
+
+                $('.asideTable_ys').show(500);
+                $('.cancel').click(function(){
+                    $('.asideTable_ys').hide(500);
+
+                })
+                // 编号的输入框不允许编辑
+                $("input.v_code").attr("readonly", true);
+                // 点删除按钮，删除当前tr并且删除数据库中的数据
+                $('.del').off().click(function(){
+
+                    $(this).parent().remove();
+                    var aa = $(this).next().text();
+                    // 发送数据给后台删除该项
+                    $.post(global.apiBaseUrl + 'del',{id:aa},function(res){
+                    })
+                    $('.asideTable_ys').hide(500);
+
+                }.bind(this));
+
+                // 编辑框中显示对应的信息
+                var v_code = $(this).nextAll('.v_code').text();
+                $('input.v_code').val(v_code);
+
+                var v_name = $(this).nextAll('.v_name').text();
+                $('input.v_name').val(v_name);
+
+                var linkname = $(this).nextAll('.linkname').text();
+                $('input.linkname').val(linkname);
+
+                var tel = $(this).nextAll('.tel').text();
+                $('input.tel').val(tel);
+
+                var address = $(this).nextAll('.address').text();
+                $('textarea.address').val(address);
+
+                var v_type = $(this).nextAll('.v_type').text();
+                var length1 = $('select.v_type').children().get().length;
+
+                for(var i=0;i<length1;i++){
+                
+                    if($('select.v_type').children().get(i).text == v_type){
+
+                        $('select.v_type').children().get(i).selected = true;
+                    }                    
+                }
+
+                var payment = $(this).nextAll('.payment').text();
+                var length2 = $('select.payment').children().get().length;
+
+                for(var i=0;i<length2;i++){
+                
+                    if($('select.payment').children().get(i).text == payment){
+
+                        $('select.payment').children().get(i).selected = true;
+                    }                    
+                }
+
+                // 点击保存时。要将当前输入框中的内容重新赋值给当前tr,并更改数据库中的数据
+                $('.save').off().click(function(){
+                    var v_code2 = $('input.v_code').val();
+                    var v_name2 = $('input.v_name').val();
+                    var linkname2 = $('input.linkname').val();
+                    var tel2 = $('input.tel').val();
+                    var address2 = $('textarea.address').val();
+                    var v_type2 = $('.v_type').children(':selected').text();
+                    var payment2 = $('.payment').children(':selected').text();
+                    $(this).nextAll('.v_code').text(v_code2);
+                    $(this).nextAll('.v_name').text(v_name2);
+                    $(this).nextAll('.linkname').text(linkname2);
+                    $(this).nextAll('.tel').text(tel2);
+                    $(this).nextAll('.address').text(address2);
+                    $(this).nextAll('.v_type').text(v_type2);
+                    $(this).nextAll('.payment').text(payment2);
+                    $('.asideTable_ys').hide(500);
+
+                    // 向后台发送更改之后的请求
+                    // var _id = $(this).attr('data-id');
+                    var data = {
+                        // _id:ObjectId(_id),
+                        // _id:_id,
+                        id:v_code2,
+                        name:v_name2,
+                        linkname:linkname2,
+                        tel:tel2,
+                        address:address2,
+                        type:v_type2,
+                        payment:payment2
+                    }
+                    $.post(global.apiBaseUrl + 'change',data,function(res){
+                        console.log(res);
+                    })
+
+                }.bind(this));
+            })
+
+        }
+
+         editEvent();   
 
          //点击查询获取输入框中的值，向后台请求符合条件的数据写入页面
         var searchFun = function(){
             var $searchCont = $('#getInfor_ys').val();
             $.post(global.apiBaseUrl + 'search',{name:$searchCont},function(res){
                 var data = res.data;
-                console.log(data)
 
                 // 获取数据写入页面
                 $('tbody').get(0).innerHTML = res.data.map(function(item){
@@ -215,9 +209,10 @@ require(['config'],function(){
                         <td class="payment">${item.payment}</td> 
                     </tr>`
                 }).join('');
-                
+                editEvent();
             })
         }
+
         $('.function_ys #searchBtn_ys').on('click',function(){
             searchFun();
         })
@@ -261,9 +256,7 @@ require(['config'],function(){
                         <td class="payment">${item.payment}</td> 
                     </tr>`
                 }).join('');
-                console.log(res.total/qty)//3.2
-                
-
+                editEvent();
             })
         })
 
@@ -291,7 +284,7 @@ require(['config'],function(){
                         <td class="payment">${item.payment}</td> 
                     </tr>`
                 }).join('');
-                
+                editEvent();
             })
         })
 
