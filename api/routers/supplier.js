@@ -58,5 +58,28 @@ module.exports={
             })
         })
 
+        // app.post('/search',function(req,res){
+        //     var obj = req.body;//{}
+        //     var val = obj.name;//输入框中输入的值
+        //     var reg = eval("/(^(?=.*("+val+")))/");//对输入的值正则化
+        //     var getData = [];
+        //     var getAttr = [];
+        //     for(let attr in obj){
+        //         getAttr.push(attr);
+        //     }
+        //     // console.log(getAttr)
+        //     getAttr.forEach(function(item){
+
+
+        //         // var _d = {getAttr[i]:reg};
+        //         db.mongodb.select('supplier',{item:reg},function(result){
+                    
+        //         console.log({item:reg})
+        //         //     getData.push(result);
+        //         })
+        //     })
+        //             res.send(getData);
+        // });
     }
 }
+

@@ -193,7 +193,17 @@ require(['config'],function(){
          //点击查询获取输入框中的值，向后台请求符合条件的数据写入页面
         var searchFun = function(){
             var $searchCont = $('#getInfor_ys').val();
+            // var data = {
+            //     id:$searchCont,
+            //     name:$searchCont,
+            //     linkname:$searchCont,
+            //     tel:$searchCont,
+            //     address:$searchCont,
+            //     type:$searchCont,
+            //     payment:$searchCont
+            // }
             $.post(global.apiBaseUrl + 'search',{name:$searchCont},function(res){
+                console.log(res)
                 var data = res.data;
 
                 // 获取数据写入页面
