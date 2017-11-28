@@ -1,8 +1,8 @@
 
 // 后端供货商js代码
-var apirequire = require('../modules/apiresult.js');
+var apiresult = require('../modules/apiresult.js');
 var db = require('../db/dbhelper');
-
+var jwt = require('jsonwebtoken');
 var ObjectId = require('mongodb').ObjectID;
 // 供应商
 module.exports={
@@ -22,7 +22,10 @@ module.exports={
                     data:result.data.slice((pageNo-1)*qty,qty*pageNo),
                     total:length
                 }
-                res.send(resArr);
+                if(resArr.data.length != 0 ){
+                    res.send(resArr);
+                    
+                }
             })
         })
 
@@ -55,6 +58,20 @@ module.exports={
              var reg = eval("/(^(?=.*("+val+")))/");
             db.mongodb.select('supplier',{name:reg},function(result){
                 res.send(result);
+            })
+        })
+        // 查找id是否已存在
+        app.post('/getId',function(req,res){
+
+            db.mongodb.select('supplier',req.body,function(result){
+                if(result.data.length == 0){
+                    // var token = jwt.sign({id:req.body.id},'suibian',{expiresIn:3000});
+                    res.send(apiresult(true));
+                    
+                }else{
+                    res.send(apiresult(false));
+                }
+                
             })
         })
 

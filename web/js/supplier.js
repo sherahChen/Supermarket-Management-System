@@ -35,7 +35,25 @@ require(['config'],function(){
                     $('.asideTable_ys').hide(500);
                 })
 
-                // 点保存新增项目
+                // 当此输入框失去焦点时将输入的内容请求给后台判断这个编号是否存在
+                $('input.v_code').off().on('blur',function(){
+                    var v_code1 = $('input.v_code').val();
+
+                    if(!/^[0-9]{1,10}$/.test(v_code1)){
+                        $('.info').html('你输入的什么鬼？').css({'color':'#f00'});
+                        return false;
+                    }else{
+                        $('.info').html('');
+                        $.post(global.apiBaseUrl + 'getId',{id:v_code1},function(res){
+                            if(!res.state){
+                                $('.info').html('此编号已存在').css({'color':'#f00'});
+                            }
+                        
+                        })
+                        
+                    }
+                })
+                    
                 $('.addSave').off().on('click',function(){
                     
                     var v_code1 = $('input.v_code').val();
@@ -45,20 +63,7 @@ require(['config'],function(){
                     var address1 = $('textarea.address').val();
                     var v_type1 = $('.v_type').children(':selected').text();
                     var payment1 = $('.payment').children(':selected').text();
-                    var $tr = $('<tr></tr>');
-                        $tr.html(`
-                               
-                            <td class="edit">编辑</td>
-                            <td class="v_code">${v_code1}</td>
-                            <td class="v_name">${v_name1}</td>
-                            <td class="linkname">${linkname1}</td>
-                            <td class="tel">${tel1}</td>
-                            <td class="address">${address1}</td>
-                            <td class="v_type">${v_type1}</td>
-                            <td class="payment">${payment1}</td> 
-                            
-                        `).appendTo('tbody');
-                    $('.asideTable_ys').hide(500);
+                    
 
                     
 
@@ -72,13 +77,35 @@ require(['config'],function(){
                         type:v_type1,
                         payment:payment1
                     }
-                    $.post(global.apiBaseUrl + 'add',data,function(res){
-                        console.log(res)
+                    // 如果$('.info').text()有值，或者v_code1的值为空不能发送请求
+                    console.log($('.info').text() == '');
+                    console.log(v_code1 != '');
+                    if($('.info').text() == '' && v_code1 != ''){
+                        $.post(global.apiBaseUrl + 'add',data,function(res){
+                            console.log(res)
+                            var $tr = $('<tr></tr>');
+                            $tr.html(`
+                                   
+                                <td class="edit">编辑</td>
+                                <td class="v_code">${v_code1}</td>
+                                <td class="v_name">${v_name1}</td>
+                                <td class="linkname">${linkname1}</td>
+                                <td class="tel">${tel1}</td>
+                                <td class="address">${address1}</td>
+                                <td class="v_type">${v_type1}</td>
+                                <td class="payment">${payment1}</td> 
+                                
+                            `).appendTo('tbody');
+                        $('.asideTable_ys').hide(500);
+                            
+                        })
                         
-                    })
-                    editEvent();
+                    }
+                        editEvent();
+                     
                    
                 })
+                
             })
 
             editEvent();   
@@ -88,7 +115,7 @@ require(['config'],function(){
         var editEvent = function(){
             // 点击编辑出现
             $('.edit').click(function(){
-
+                $('.info').html('');
                 $('.del').show();
 
                 $('.asideTable_ys').show(500);
@@ -249,7 +276,6 @@ require(['config'],function(){
                 $('.next').css({'color':'#ccc'});
             }else{
                 pageNo++;
-            }
             $.post(global.apiBaseUrl + 'supplier',{qty:qty,pageNo:pageNo},function(res){
                 page = res.total/qty;
                 console.log(res)
@@ -268,6 +294,7 @@ require(['config'],function(){
                 }).join('');
                 editEvent();
             })
+            }
         })
 
         $('.prev').click(function(e){
@@ -278,7 +305,6 @@ require(['config'],function(){
             }else{
                 pageNo--;
 
-            }
             $.post(global.apiBaseUrl + 'supplier',{qty:qty,pageNo:pageNo},function(res){
                 console.log(res)
                 // 获取数据写入页面
@@ -296,6 +322,7 @@ require(['config'],function(){
                 }).join('');
                 editEvent();
             })
+            }
         })
 
         
