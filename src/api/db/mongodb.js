@@ -12,7 +12,6 @@ client.connect(connstr, function(_error, _db){
         db = _db;
     }
 })
-
 module.exports = {
     select: function(_collection, _condition, _cb){
         db.collection(_collection).find(_condition || {}).toArray(function(error, result){
@@ -24,6 +23,14 @@ module.exports = {
             _cb(apiresult(error ? false : true, error || result));
         })
     },
-    update: function(){},
-    delete: function(){}
+    update: function(_collection, _beforedata , _updata, _cb){
+        db.collection(_collection).update(_beforedata,_updata, function(error, result){
+            _cb(apiresult(error ? false : true, error || result));
+        })
+    },
+    delete: function(_collection, _condition, _cb){
+        db.collection(_collection).remove(_condition,function(error, result){
+            _cb(apiresult(error ? false : true, error || result));
+        })
+    }
 }

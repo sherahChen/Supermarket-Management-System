@@ -10,11 +10,11 @@
     <body>
         <div id="div"></div>
         <header class="clearfix">
-            <p class="control"><span class="del">删除</span>
+            <p class="control"><span class="enterKu">入库</span>
             <span class="edit">编辑</span>
             <span class="add">添加</span></p>           
             <div>
-                <input type="txt" class="search" placeholder="商品名称/条码"><button class="search_btn">查询</button>
+                <input type="txt" class="search" placeholder="商品名称/供应商"><button class="search_btn">查询</button>
             </div>        
         </header>
      <table class="table table-striped table-bordered">
@@ -26,12 +26,12 @@
             <th>条形码</th>
             <th>进货单号</th>
             <th>供应商名称</th>
-            <th>库存</th>
             <th>进货量</th>
-            <th>单位</th>
+            <th>实际收货数量</th>
             <th>进货价</th>
-            <th>小计</th>
-            <th>进货日期</th>
+            <th>收货日期</th>
+            <th>支付方式</th>
+            <th>是否退货</th>
         </tr>
     </thead>
      <tbody>
@@ -44,14 +44,13 @@
        <p><label for="barcode">条形码：</label><input id="barcode" type="text" /></p>
        <p><label for="rid">运货单号：</label><input id="rid" type="text" /></p>
        <p><label for="s_merchant">供应商名称：</label><input id="s_merchant" type="text" /></p>
-       <p><label for="gqty">库存：</label><input id="gqty" type="text" /></p>
        <p><label for="s_qty">进货量：</label><input id="s_qty" type="text" /></p>
-       <p><label for="unit">单位：</label><input id="unit" type="text" /></p>
+       <p><label for="real_qty">实际收货量：</label><input id="real_qty" type="text" /></p>
        <p><label for="stock_price">进货价：</label><input id="stock_price" type="text" /></p>
-       <p><label for="subtotal">小计：</label><input id="subtotal" type="text" /></p>
-       <p><label for="stock_date">进货日期：</label><input id="stock_date" type="text" /></p>
+       <p><label for="t_date">收货日期：</label><input id="t_date" type="text" /></p>
+       <p><label for="t_pay">支付方式：</label><input id="t_pay" type="text" /></p>
         <input id="save" type="button" value="保存"/>
     </div>
     </body>
-    <script src="../js/require.js" data-main="../js/stock_in" type="text/javascript"></script>
+    <script src="../js/require.js" data-main="../js/take_goods" type="text/javascript"></script>
 </html>

@@ -19,7 +19,7 @@ gulp.task('mySass',function(){
 	gulp.src(path.sass) //得到文件流（文件在内存中的状态）
 
 		.pipe(sass({outputStyle:'expanded'}).on('error', sass.logError))	//编译sass文件
-		.pipe(gulp.dest('./web/src/css/'))			//输出到硬盘
+		.pipe(gulp.dest('./src/web/css/'))			//输出到硬盘
 });
 
 
