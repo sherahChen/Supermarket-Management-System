@@ -3,12 +3,17 @@ require.config({
         jquery:'../libs/jquery-3.2.1',
         common:'common',
         jqueryUI:'../libs/jquery-ui-1.12.1/jquery-ui',
-        global:'../libs/global'
-
+        global_eddie:'../libs/global_eddie',
+        qrcode:'qrcode.min',
+        socketio:'../js/socket.io.min',
+        bootstrap:"../libs/bootstrap-3.3.7-dist/js/bootstrap.min"
     },
     shim:{
        common:['jquery'],
-       jqueryUI:['jquery']
+       jqueryUI:['jquery'],
+       qrcode:['jquery'],
+       socketio:['jquery'],
+       bootstrap:['jquery']
     }
 
 });

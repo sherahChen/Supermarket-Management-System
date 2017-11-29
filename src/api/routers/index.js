@@ -1,14 +1,21 @@
-var express = require('express');
-var app = express();
-var bp = require('body-parser');
+/*
+    这是总的路由
+ */
+
+var express = require('express');//引入express框架
+var app = express();//加载express()
+var bp = require('body-parser');//post的中间件引入模块
+
 var userRouter = require('./user');
 var productRouter = require('./product');
-var purchaseRouter=require('./purchase');
+var paymentRouter = require('./payment');
+var socketRouter = require('./socket');
+
 module.exports = {
-    start: function(_port){
+    start:function(_port){
+        app.use(bp.urlencoded({extended:false}));
 
-        app.use(bp.urlencoded({extended: false}));
-
+        //设置跨域请求
         app.all('*', function(req, res, next) {
             res.header("Access-Control-Allow-Origin", "*");
             res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
@@ -21,9 +28,16 @@ module.exports = {
             }
         });
 
+        /*
+            这些是路由的分发
+         */
         userRouter.register(app);
         productRouter.register(app);
-        purchaseRouter.register(app);
-        app.listen(_port);
+        paymentRouter.register(app);
+        socketRouter.actions(app,express)
+
+        app.listen(_port,function(){
+            console.log('Server running on http://localhost:'+ _port);
+        });
     }
 }
