@@ -49,23 +49,23 @@ require(['config'], function() {
             box2.style.top = top + 'px';
         }
         header.onmousedown = function(evt) {
-            var ox = evt.offsetX;
-            var oy = evt.offsetY;
+            var ox = evt.clientX-box2.offsetLeft;
+            var oy = evt.clientY-box2.offsetTop;
             document.onmousemove = function(e) {
                 box2.style.left = e.clientX - ox + 'px';
                 box2.style.top = e.clientY - oy + 'px';
                 e.preventDefault();
             }
-            evt.stopPropagation();
         }
         header.onmouseup = function(e) {
-            e.preventDefault();
+            // e.preventDefault();
             document.onmousemove = null;
         }
         $('tbody').on('click', '.cbox', function() {
             if ($(this).is(':checked')) {
                 var currentTr = $(this).parents('tr');
                 var idx = $(this).parents('tr').attr('data-id');
+                // 删除
                 $('.control').on('click', '.del', function() {
                     $(this).css({'background-color':"#58bc58"}).siblings('span').css({'background-color':"orange"});
 

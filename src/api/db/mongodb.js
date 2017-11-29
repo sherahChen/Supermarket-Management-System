@@ -23,8 +23,8 @@ module.exports = {
             _cb(apiresult(error ? false : true, error || result));
         })
     },
-    update: function(_collection, _beforedata , _updata, _cb){
-        db.collection(_collection).update(_beforedata,_updata, function(error, result){
+    update: function(_collection,_condition , _updata, _cb){
+        db.collection(_collection).update(_condition,{$set:_updata},function(error, result){
             _cb(apiresult(error ? false : true, error || result));
         })
     },

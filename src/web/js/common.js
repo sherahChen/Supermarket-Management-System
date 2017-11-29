@@ -1,10 +1,13 @@
-/* 
-* @Author: Marte
-* @Date:   2017-11-24 11:39:55
-* @Last Modified by:   Marte
-* @Last Modified time: 2017-11-24 11:39:57
-*/
-
-$(document).ready(function(){
-    
-});
+// 导出excel
+function exportExcel(){
+     $('.export').click(function(){
+         $(".table").table2excel({
+            exclude: ".cbox",
+            name: "Excel Document Name",
+            filename: $('title').html(),
+            exclude_img: true,
+            exclude_links: true,
+            exclude_inputs: true
+        });
+     })
+}

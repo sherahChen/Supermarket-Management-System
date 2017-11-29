@@ -34,80 +34,114 @@ require(['config'], function() {
             }).join('');
             $('tbody').append(tr);
             // 退货 
-             var $p= $('<p/>').attr('id', "r_qty");
-            var $label = $('<label/>').html('退货数量：'); 
+            var $p = $('<p/>').attr('id', "r_qty");
+            var $label = $('<label/>').html('退货数量：');
             var $input = $('<input/>').attr('type', 'number');
             $('.reback').on('click', function() {
-                $('#t_date').prev('label').html('退货日期：');
-                var currentTr = $(this).parents('tr');
-                var idx = currentTr.attr('data-id');
-               $p.appendTo('#box2');
-                $label.appendTo($p);
-               $input.appendTo($p);
-                $('#div').addClass('opt');
-                $('#box2').addClass('enter').css({
-                    'display': 'block'
-                });
-                $('#gid').attr({
-                    "disabled": "disabled"
-                }).val(currentTr.attr('data-id'));
-                $('#r_goods').attr({
-                    "disabled": "disabled"
-                }).val(currentTr.find('td').eq(2).html());
-                $('#barcode').attr({
-                    "disabled": "disabled"
-                }).val(currentTr.find('td').eq(3).html());
-                $('#rid').attr({
-                    "disabled": "disabled"
-                }).val(currentTr.find('td').eq(4).html());
-                $('#s_merchant').attr({
-                    "disabled": "disabled"
-                }).val(currentTr.find('td').eq(5).html());
-                $('#s_qty').attr({
-                    "disabled": "disabled"
-                }).val(currentTr.find('td').eq(6).html());
-                $('#real_qty').attr({
-                    "disabled": "disabled"
-                }).val(currentTr.find('td').eq(7).html());
-                $('#stock_price').attr({
-                    "disabled": "disabled"
-                }).val(currentTr.find('td').eq(8).html());
-                $('#t_date').val(currentTr.find('td').eq(9).html());
-                $('#t_pay').attr({
-                    "disabled": "disabled"
-                }).val(currentTr.find('td').eq(10).html());
-                $('#save').click(function() {
-                    var num = $('#real_qty').val();
-                    $('#r_qty').css({
-                        'position': 'relative'
+                    $('#t_date').prev('label').html('退货日期：');
+                    var currentTr = $(this).parents('tr');
+                    var idx = currentTr.attr('data-id');
+                    $p.appendTo('#box2');
+                    $label.appendTo($p);
+                    $input.appendTo($p);
+                    $('#div').addClass('opt');
+                    $('#box2').addClass('enter').css({
+                        'display': 'block'
                     });
-                    var $span = $('<span/>').css({
-                        'color': "red",
-                        'position': 'absolute',
-                        'top': '30px',
-                        'left': '100px'
-                    }).html('数量超出收货范围！');
-                    var value = $('#r_qty').find('input').val();
-                    if (value > Number(num)) {
-                        $span.appendTo('#r_qty');
-                        $('#r_qty').find('input')[0].focus();
-                    }
-                    var rebData = {
-                        rid: $('#rid').val(),
-                        s_merchant: $('#s_merchant').val(),
-                        r_goods: $('#r_goods').val(),
-                        r_price: $('#stock_price').val(),
-                        r_qty: value,
-                        r_date: $('#t_date').val()
-                    };
-                    rebData = JSON.stringify(rebData);
-                    $.post(global.apiBaseUrl + 'purchase/take_goods', {
-                        rebData: rebData
-                    }, function(res) {})
-
-                    box2.style.display = 'none';
-                    $('#div').removeClass('opt');
+                    $('#gid').attr({
+                        "disabled": "disabled"
+                    }).val(currentTr.attr('data-id'));
+                    $('#r_goods').attr({
+                        "disabled": "disabled"
+                    }).val(currentTr.find('td').eq(2).html());
+                    $('#barcode').attr({
+                        "disabled": "disabled"
+                    }).val(currentTr.find('td').eq(3).html());
+                    $('#rid').attr({
+                        "disabled": "disabled"
+                    }).val(currentTr.find('td').eq(4).html());
+                    $('#s_merchant').attr({
+                        "disabled": "disabled"
+                    }).val(currentTr.find('td').eq(5).html());
+                    $('#s_qty').attr({
+                        "disabled": "disabled"
+                    }).val(currentTr.find('td').eq(6).html());
+                    $('#real_qty').attr({
+                        "disabled": "disabled"
+                    }).val(currentTr.find('td').eq(7).html());
+                    $('#stock_price').attr({
+                        "disabled": "disabled"
+                    }).val(currentTr.find('td').eq(8).html());
+                    $('#t_date').val(currentTr.find('td').eq(9).html());
+                    $('#t_pay').attr({
+                        "disabled": "disabled"
+                    }).val(currentTr.find('td').eq(10).html());
+                    $('#save').click(function() {
+                        var num = $('#real_qty').val();
+                        $('#r_qty').css({
+                            'position': 'relative'
+                        });
+                        var $span = $('<span/>').css({
+                            'color': "red",
+                            'position': 'absolute',
+                            'top': '30px',
+                            'left': '100px'
+                        }).html('数量超出收货范围！');
+                        var value = $('#r_qty').find('input').val();
+                        if (value > Number(num)) {
+                            $span.appendTo('#r_qty');
+                            $('#r_qty').find('input')[0].focus();
+                        }
+                        var rebData = {
+                            rid: $('#rid').val(),
+                            s_merchant: $('#s_merchant').val(),
+                            r_goods: $('#r_goods').val(),
+                            r_price: $('#stock_price').val(),
+                            r_qty: value,
+                            r_date: $('#t_date').val()
+                        };
+                        rebData = JSON.stringify(rebData);
+                        $.post(global.apiBaseUrl + 'purchase/take_goods', {
+                            rebData: rebData
+                        }, function(res) {})
+                        box2.style.display = 'none';
+                        $('#div').removeClass('opt');
+                    })
+                    $('#close').on('click', function(e) {
+                        $('#box2').css({
+                            'display': 'none'
+                        });
+                        $('#div').removeClass('opt');
+                        e.stopPropagation();
+                    });
                 })
+                // 入库
+            $('tbody').on('click', '.cbox', function() {
+                if ($(this).is(':checked')) {
+                    var currentTr = $(this).parents('tr');
+                    var idx = $(this).parents('tr').attr('data-id');
+                    $('.enterKu').click(function() {
+                        var arr = [];
+                        for (var i = 0; i < $('.cbox').length; i++) {
+                            var tr = $('.cbox').eq(i).parents('tr').attr('data-id');
+                            if (tr === idx) {
+                                var gqty = currentTr.find('td').eq(7).html();
+                                currentTr.remove();
+                                // 收货减
+                                $.post(global.apiBaseUrl + 'repertory', {
+                                    g_id: tr
+                                }, function(res) {});
+                                // 库存加
+                                $.post(global.apiBaseUrl + 'repertory', {
+                                    enter_id: tr,
+                                    gqty: gqty
+                                }, function(res) {
+                                   
+                                })
+                            }
+                        }
+                    })
+                }
             })
         }
         var box2 = document.querySelector('#box2');
@@ -125,8 +159,8 @@ require(['config'], function() {
             box2.style.top = top + 'px';
         }
         header.onmousedown = function(evt) {
-            var ox = evt.offsetX;
-            var oy = evt.offsetY;
+            var ox = evt.clientX - box2.offsetLeft;
+            var oy = evt.clientY - box2.offsetTop;
             document.onmousemove = function(e) {
                 box2.style.left = e.clientX - ox + 'px';
                 box2.style.top = e.clientY - oy + 'px';
@@ -135,14 +169,14 @@ require(['config'], function() {
             evt.stopPropagation();
         }
         header.onmouseup = function(e) {
-                e.preventDefault();
-                document.onmousemove = null;
-            }
-            // 编辑
+            e.preventDefault();
+            document.onmousemove = null;
+        }
         $('tbody').on('click', '.cbox', function() {
             if ($(this).is(':checked')) {
                 var currentTr = $(this).parents('tr');
                 var idx = $(this).parents('tr').attr('data-id');
+                // 编辑
                 $('.control').on('click', '.edit', function() {
                     $(this).css({
                         'background-color': "#58bc58"
@@ -153,7 +187,6 @@ require(['config'], function() {
                     $('#box2').addClass('enter').css({
                         'display': 'block'
                     });
-                    // console.log(currentTr.find('td').eq(2).html())
                     $('#gid').val(currentTr.attr('data-id'));
                     $('#gid').attr({
                         "disabled": "disabled"
@@ -172,44 +205,48 @@ require(['config'], function() {
             $('#save').click(function(e) {
                 box2.style.display = 'none';
                 $('#div').removeClass('opt');
-                var gid = $('#gid').val();
-                var r_goods = $('#r_goods').val();
-                currentTr.find('td').eq(2).html(r_goods);
-                var barcode = $('#barcode').val();
-                currentTr.find('td').eq(3).html(barcode);
-                var rid = $('#rid').val();
-                currentTr.find('td').eq(4).html(rid);
-                var s_merchant = $('#s_merchant').val();
-                currentTr.find('td').eq(5).html(s_merchant);
-                var s_qty = $('#s_qty').val();
-                currentTr.find('td').eq(6).html(s_qty);
-                var real_qty = $('#real_qty').val();
-                currentTr.find('td').eq(7).html(real_qty);
-                var stock_price = $('#stock_price').val();
-                currentTr.find('td').eq(8).html(stock_price);
-                var t_date = $('#t_date').val();
-                currentTr.find('td').eq(9).html(t_date);
-                var t_pay = $('#t_pay').val();
-                currentTr.find('td').eq(10).html(t_pay);
-                var newDate = {
-                    gid: gid,
-                    r_goods: r_goods,
-                    barcode: barcode,
-                    rid: rid,
-                    s_merchant: s_merchant,
-                    s_qty: s_qty,
-                    real_qty: real_qty,
-                    stock_price: stock_price,
-                    t_date: t_date,
-                    t_pay: t_pay
-                };
-                newDate = JSON.stringify(newDate);
                 $.post(global.apiBaseUrl + 'purchase/take_goods', {
-                    products: newDate
+                    products: getData(currentTr)
                 }, function(res) {})
                 e.stopPropagation();
             });
         })
+
+        function getData(currentTr) {
+            var gid = $('#gid').val();
+            var r_goods = $('#r_goods').val();
+            currentTr.find('td').eq(2).html(r_goods);
+            var barcode = $('#barcode').val();
+            currentTr.find('td').eq(3).html(barcode);
+            var rid = $('#rid').val();
+            currentTr.find('td').eq(4).html(rid);
+            var s_merchant = $('#s_merchant').val();
+            currentTr.find('td').eq(5).html(s_merchant);
+            var s_qty = $('#s_qty').val();
+            currentTr.find('td').eq(6).html(s_qty);
+            var real_qty = $('#real_qty').val();
+            currentTr.find('td').eq(7).html(real_qty);
+            var stock_price = $('#stock_price').val();
+            currentTr.find('td').eq(8).html(stock_price);
+            var t_date = $('#t_date').val();
+            currentTr.find('td').eq(9).html(t_date);
+            var t_pay = $('#t_pay').val();
+            currentTr.find('td').eq(10).html(t_pay);
+            var newDate = {
+                gid: gid,
+                r_goods: r_goods,
+                barcode: barcode,
+                rid: rid,
+                s_merchant: s_merchant,
+                s_qty: s_qty,
+                real_qty: real_qty,
+                stock_price: stock_price,
+                t_date: t_date,
+                t_pay: t_pay
+            };
+            newDate = JSON.stringify(newDate);
+            return newDate;
+        }
         $('.add').on('click', function() {
             $(this).css({
                 'background-color': "#58bc58"
@@ -288,8 +325,10 @@ require(['config'], function() {
                 }, function(res) {})
             })
         });
-        $('#close').click(function(e) {
-            box2.style.display = 'none';
+        $('#close').on('click', function(e) {
+            $('#box2').css({
+                'display': 'none'
+            });
             $('#div').removeClass('opt');
             e.stopPropagation();
         });

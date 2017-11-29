@@ -87,29 +87,51 @@ module.exports = {
                 res.send(result);
             })
         })
-        app.post('/purchase/return_goods',function(req,res){
+        app.post('/purchase/return_goods', function(req, res) {
             if (req.body.g_name) {
-                    var sel = req.body.g_name;
-                    db.mongodb.select('return_goods', {
-                        "$or": [{
-                            r_goods: sel
-                        }, {
-                            rid: sel
-                        }]
+                var sel = req.body.g_name;
+                db.mongodb.select('return_goods', {
+                    "$or": [{
+                        r_goods: sel
+                    }, {
+                        rid: sel
+                    }]
+                }, function(result) {
+                    res.send(result);
+                })
+            } else if (req.body.products) {
+                var products = JSON.parse(req.body.products);
+                var beforedate = db.mongodb.select('return_goods', {
+                    rid: products.rid
+                }, function(resu) {
+                    db.mongodb.update('return_goods', resu.data[0], products, function(result) {
+                        res.send(result);
+                    })
+                });
+            }
+        })
+        app.post('/repertory', function(req, res) {
+            if (req.body.enter_id) {
+                db.mongodb.select('repertory', {
+                    gid: req.body.enter_id
+                }, function(resu) {
+                    var new_qty = resu.data[0].gqty * 1 + Number(req.body.gqty);
+                    db.mongodb.update('repertory', {
+                        gid: req.body.enter_id
+                    }, {
+                        gqty: new_qty
                     }, function(result) {
                         res.send(result);
                     })
-                }
-                else if (req.body.products) {
-                    var products = JSON.parse(req.body.products);
-                    var beforedate = db.mongodb.select('return_goods', {
-                        rid:products.rid
-                    }, function(resu) {
-                        db.mongodb.update('return_goods', resu.data[0], products, function(result) {
-                            res.send(result);
-                        })
-                    });
-                }
+                })
+            } else if (req.body.g_id) {
+                var sel = req.body.g_id;
+                db.mongodb.delete('take_goods', {
+                    gid: sel
+                }, function(result) {
+                    res.send(result);
+                })
+            }
         })
     }
 }
