@@ -1,2 +1,3 @@
-var router = require('./routers/index');
+var router = require('./routers');
+
 router.start(88);
